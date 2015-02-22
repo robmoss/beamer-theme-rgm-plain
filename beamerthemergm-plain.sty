@@ -1,0 +1,242 @@
+% ********************************************************************
+% beamerthemergm-plain.sty
+% Rob Moss, 2015
+%
+% This package provides the "rgm-plain" presentation theme for Beamer.
+% It uses the freely-available "Open Sans" font and, by default, the
+% Solarized colour palette (in light mode).
+%
+% 1.0 2015/02/22
+%   Initial version of the theme.
+%
+% Theme Options:
+%   bars - Show section names and dots for each slide in the header;
+%          this requires sections and subsections to be defined.
+%   dark - Use the "solarized-dark" theme instead of "solarized-light".
+%
+% Custom Commands:
+%   \boldword
+%   \imageframe
+%   \overeq
+%   \undereq
+%
+% Links:
+%   http://www.google.com/fonts/specimen/Open+Sans
+%   http://ethanschoonover.com/solarized
+%
+% License:
+%   This software may be modified and distributed under the terms of the
+%   BSD 2-Clause license (http://opensource.org/licenses/BSD-2-Clause).
+%
+% ********************************************************************
+
+\NeedsTeXFormat{LaTeX2e}
+\def \filename {beamerthemergm-plain.sty}
+\def \filedate {2015/02/22}
+\def \fileversion {1.0}
+\ProvidesPackage{beamerthemergm-plain}[\filedate\space\fileversion\space
+    Beamer "rgm-plain" theme]
+\typeout{Package: `beamerthemergm-plain' \fileversion\space <\filedate>}
+
+
+% ********************************************************************
+% Theme options
+% ********************************************************************
+
+\DeclareOptionBeamer{dark}[true]{\def\beamer@themergmplain@dark{#1}}
+\ExecuteOptionsBeamer{dark=false}
+\DeclareOptionBeamer{bars}[true]{\def\beamer@themergmplain@bars{#1}}
+\ExecuteOptionsBeamer{bars=false}
+\ProcessOptionsBeamer
+
+
+% ********************************************************************
+% Presentation mode
+% ********************************************************************
+
+\mode<presentation>
+
+
+% ********************************************************************
+% Underlying theme and appearance
+% ********************************************************************
+
+%% Use the default Beamer theme as a starting point.
+\usetheme{default}
+
+%% Hide the useless/distracting navigation symbols.
+\setbeamertemplate{navigation symbols}{}
+
+%% Display blocks with rounded corners and no shadows.
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+%% Don't display a date, the audience knows what day it is.
+\date{}
+
+%% Process the theme options.
+\RequirePackage{ifthen}
+
+% Display section names and dots for each slide (requires subsections).
+\ifthenelse{\equal{\beamer@themergmplain@bars}{true}}{%
+  \useoutertheme[subsection=false]{smoothbars}
+}{}
+
+%% Use the solarized colour theme (the default is the light version).
+\ifthenelse{\equal{\beamer@themergmplain@dark}{true}}{%
+  \usecolortheme{solarized-dark}
+}{%
+  \usecolortheme{solarized-light}
+}
+
+
+% ********************************************************************
+% Font settings
+% ********************************************************************
+
+%% Load the AMS mathematics package before loading mathspec.
+\RequirePackage{amsmath}
+
+%% Proves \underbracket{} for displaying text below an underbrace.
+%% Note: this must be loaded before mathspec, because it loads amsmath.
+\RequirePackage{mathtools}
+
+%% Use ordinary fonts (OTF, etc) for typesetting mathematics with XeLaTeX.
+\RequirePackage{mathspec}
+
+%% Improved functionality and various fixes when using the XeTeX backend.
+\RequirePackage{xltxtra,xunicode}
+
+%% Note: number options include Lining|OldStyle and Monospaced|Proportional.
+%% Set the font for all text and plain mathematics.
+\setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+%% Set the font for \mathrm{} text.
+\setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+
+
+% ********************************************************************
+% Support packages
+% ********************************************************************
+
+%% TikZ is great for, e.g., highlighting sections of equations or drawing
+%% overlays on images and plots.
+\RequirePackage{tikz}
+
+%% Advanced placement and positioning support, as described in Section 16.5.3
+%% of the TikZ & PGF manual.
+\usetikzlibrary{positioning}
+
+%% Provides \makecell{} for constructing tabular cells which can be used,
+%% e.g., for embedding multi-line content in TikZ nodes.
+\RequirePackage{makecell}
+
+%% Highlight (parts of) formulas, with support for Beamer overlays.
+%% The "customcolors" option makes the following commands available:
+%%   \hfsetbordercolor{}
+%%   \hfsetfillcolor{}.
+\RequirePackage[customcolors]{hf-tikz}
+
+%% Greatly improve the appearance of tables.
+\RequirePackage{booktabs}
+
+%% Who presents a scientific talk without at least one picture?!?
+\RequirePackage{graphicx}
+
+
+% ********************************************************************
+% Custom commands
+% ********************************************************************
+
+%% Show a word in plain and bold fonts, but reserve space for the
+%% increased width of the bold text, so that it doesn't affect the
+%% surrounding text.
+%%
+%% Source:
+%%     http://tex.stackexchange.com/a/158632
+%%
+%% Usage:
+%%     \boldword<2>{some text}
+%%
+\newcommand{\widthofbold}[1]{%
+  \settowidth{\dimen0}{\textbf{#1}}%
+  \makebox[\dimen0]{#1}}
+\newcommand<>{\boldword}[1]{%
+  \alt#2{\textbf{#1}}{\widthofbold{#1}}}
+
+%% Create a frame that contains an image, scaled to cover the entire frame.
+%%
+%% Usage:
+%%     \imageframe{image-file}
+%%
+\newcommand{\imageframe}[1]{%
+  {
+    \usebackgroundtemplate{%
+      \includegraphics[height=\paperheight]{#1}}
+    \begin{frame}[plain]{}
+      \centering
+    \end{frame}
+  }
+}
+
+%% Highlight portions of equations with coloured boxes and coloured text
+%% either above or below each box; these highlights can be nested.
+%%
+%% Usage:
+%%     \overeq{FILL}{BORDER}{BROFF}{ALOFF}{BRACEW}{BRACEH}{EQN}{LABEL}
+%%     \undereq{FILL}{BORDER}{BROFF}{ALOFF}{BRACEW}{BRACEH}{EQN}{LABEL}
+%%
+%% Arguments:
+%%     FILL    The colour of the box interior (background).
+%%     BORDER  The colour of the box border *and* label text.
+%%     BROFF   The shift offsets for the bottom-right box corner.
+%%     ALOFF   The shift offsets for the top-left box corner.
+%%     BRACEW  The rule thickness of the under/over bracket.
+%%     BRACEH  The height of the under/over bracket.
+%%     EQN     The equation portion to highlight.
+%%             You can nest \undereq{} and \overeq{} boxes in here.
+%%     LABEL   The equation label; use one of the following commands:
+%%                 \textrm{label text}
+%%                 \substrack{\text{line 1}\\\text{line2}}
+%%
+%% Note:
+%%     See Section 2.1 ("The basic commands") in the hf-tikz manual for a
+%%     detailed description of the box shift offsets.
+%%
+%% Example:
+%%     \undereq{red!10}{red!50!black}{0.05,-0.35}{-0.0,0.55}{0pt}{4pt}{%
+%%       \int_0^L J_V(x)\,dx}{\textrm{reabsorption}}
+%%
+\newcounter{overundereq}
+\newcounter{overundereqnest}
+
+\newcommand{\overeq}[8]{
+  \hfsetfillcolor{#1}%
+  \hfsetbordercolor{#2}%
+  \stepcounter{overundereq}%
+  \begingroup%
+  \edef\oueid{oue\theoverundereq{}at\theoverundereqnest}%
+  \tikzmarkin{\oueid}(#3)(#4)%
+  \addtocounter{overundereqnest}{1}%
+  \overbracket[#5][#6]{#7}^{\mathclap{\color{#2}#8}}%
+  \addtocounter{overundereqnest}{-1}
+  \tikzmarkend{\oueid}%
+  \endgroup}
+
+\newcommand{\undereq}[8]{
+  \hfsetfillcolor{#1}%
+  \hfsetbordercolor{#2}%
+  \stepcounter{overundereq}%
+  \begingroup%
+  \edef\oueid{oue\theoverundereq{}at\theoverundereqnest}%
+  \tikzmarkin{\oueid}(#3)(#4)%
+  \addtocounter{overundereqnest}{1}%
+  \underbracket[#5][#6]{#7}_{\mathclap{\color{#2}#8}}%
+  \addtocounter{overundereqnest}{-1}
+  \tikzmarkend{\oueid}%
+  \endgroup}
+
+
+% ********************************************************************
+% Other modes
+% ********************************************************************
+
+\mode<all>

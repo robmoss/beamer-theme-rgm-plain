@@ -1,0 +1,85 @@
+\documentclass[xetex,9pt,svgnames]{beamer}
+
+\usetheme{rgm-plain}
+
+\begin{document}
+
+\begin{frame}{Flow equations}
+  \centering
+  \footnotesize
+  \begin{align*}
+    F_V(L) &=
+      \ \undereq{green!10}{green!50!black}{0.05,-0.35}{-0.05,0.55}{0pt}{%
+          9.1pt}{F_V(0)}{\textrm{inflow}}
+      - \undereq{red!10}{red!50!black}{0.05,-0.35}{-0.0,0.55}{0pt}{4pt}{%
+        \int_0^L J_V(x)\,dx}{\textrm{reabsorption}}
+      & \text{(volume flow)} \\[1.25em]
+    F_S(L) &=
+      \ \undereq{green!10}{green!50!black}{0.05,-0.35}{-0.05,0.55}{0pt}{%
+        9.1pt}{F_S(0)}{\textrm{inflow}}
+      - \undereq{red!10}{red!50!black}{0.05,-0.35}{-0.0,0.55}{0pt}{4pt}{%
+        \int_0^L J_S(x)\,dx}{\textrm{reabsorption}}
+      & \text{(solute flow)}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Flux equations}
+  \centering
+  \footnotesize
+  \hfsetfillcolor{green!10} \hfsetbordercolor{green!50!black}
+  \begin{align*}
+    J_V(x) &=
+    \ \undereq{green!10}{green!50!black}{0.05,-0.15}{-0.05,0.35}{0pt}{4pt}{%
+      2\pi{}r\cdot{}dx}{\textrm{surface area}}
+    \ \cdot
+    \undereq{black!10}{black}{0.0,-0.50}{-0.0,0.65}{0pt}{2.5pt}{%
+      \left( \sum_S \sigma_S \phi_S \cdot
+      \undereq{blue!10}{blue!50!black}{0.0,-0.15}{0.0,0.30}{0pt}{2.5pt}{%
+        \left[ I_S(x) - C_S(x) \right]}{\textrm{solute gradient}}
+      \right)}{\textrm{osmotic contribution of each solute}}
+    \cdot P_f \cdot \overline{V}_w \\[2.5em]
+    J_S(x) &=
+    \ \undereq{green!10}{green!50!black}{0.05,-0.15}{-0.05,0.35}{0pt}{4pt}{%
+      2\pi{}r\cdot{}dx}{\textrm{surface area}}
+    \ \cdot
+    \begin{pmatrix}
+      \ \undereq{SkyBlue!10}{SkyBlue!50!black}{0.05,-0.55}{-0.0,0.50}{0pt}{%
+        3.8pt}{%
+        \ \undereq{blue!10}{blue!50!black}{0.0,-0.15}{0.0,0.30}{0pt}{2.5pt}{%
+          \left[ C_S(x) - I_S(x) \right]}{\textrm{solute gradient}}
+        \cdot P_S}{\textrm{passive diffusion}}
+      \ +
+      \ \undereq{red!10}{red!50!black}{0.05,-0.55}{-0.05,0.50}{0pt}{8.75pt}{%
+        V_{max} \cdot \frac{C_S(x)}{C_S(x) + K_m}}{\textrm{active transport}}
+    \ \ \, \end{pmatrix} \\[0.75em]
+    &\phantom{=}\quad +
+    \ \undereq{yellow!10}{yellow!50!black}{0.05,-0.30}{-0.05,0.50}{0pt}{%
+      3.5pt}{%
+      (1 - \sigma_S) \cdot J_V(x) \cdot \frac{C_S(x) + I_S(x)}{2} \cdot dx}{%
+      \textrm{solute drag / convection}}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Conservation equations}
+  \centering
+  \footnotesize
+  \begin{align*}
+    \undereq{green!10}{green!50!black}{0.0,-0.45}{0.00,0.65}{0pt}{8.6pt}{%
+      \frac{dF_K}{dx}}{\substack{\text{solute}\\\text{flow}}}
+    &= \undereq{SkyBlue!10}{SkyBlue!50!black}{0.05,-0.45}{-0.0,0.65}{0pt}{%
+      12.6pt}{\ J_K}{\substack{\text{solute}\\\text{flux}}}
+      & \text{(steady-state)} \\[1.5em]
+    \undereq{blue!10}{blue!50!black}{0.0,-0.45}{-0.0,0.65}{0pt}{6.87pt}{%
+      \frac{\partial{}C_K}{\partial{}t}}{%
+      \substack{\text{solute}\\\text{concentration}}}
+    &= \undereq{red!10}{red!50!black}{0.0,-0.45}{-0.0,0.65}{0pt}{5.55pt}{%
+      \left( \frac{\partial{}F_K}{\partial{}x} - J_K \right)}{%
+      \substack{\text{solute}\\\text{accumulation}}}
+    \cdot
+    \,\undereq{green!10}{green!50!black}{0.0,-0.45}{-0.05,0.65}{0pt}{6.90pt}{%
+      \frac{1}{\pi{}r^2}}{\substack{\text{radial}\\\text{area}}}
+    & \text{(dynamic)}
+  \end{align*}
+\end{frame}
+
+\end{document}
