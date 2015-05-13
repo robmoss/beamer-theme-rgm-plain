@@ -221,7 +221,7 @@
 %%             You can nest \undereq{} and \overeq{} boxes in here.
 %%     LABEL   The equation label; use one of the following commands:
 %%                 \textrm{label text}
-%%                 \substrack{\text{line 1}\\\text{line2}}
+%%                 \substack{\text{line 1}\\\text{line2}}
 %%
 %% Note:
 %%     See Section 2.1 ("The basic commands") in the hf-tikz manual for a
@@ -230,6 +230,8 @@
 %% Example:
 %%     \undereq{red!10}{red!50!black}{0.05,-0.35}{-0.0,0.55}{0pt}{4pt}{%
 %%       \int_0^L J_V(x)\,dx}{\textrm{reabsorption}}
+%%
+%%     See example-eqns/example-eqns.tex for more examples.
 %%
 \newcounter{overundereq}
 \newcounter{overundereqnest}
