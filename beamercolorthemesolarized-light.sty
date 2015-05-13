@@ -7,19 +7,37 @@
 %
 % http://ethanschoonover.com/solarized/
 %
+% 1.1 2015/05/13
+%   Added the "emph" option for increasing the main text contrast, in
+%   response to feedback from an audience member with impaired vision.
+%
 % 1.0 2015/02/22
 %   Initial version of the colour theme (light version).
+%
+% Theme Options:
+%   emph - Increase the contrast of the text.
 %
 % ********************************************************************
 
 \NeedsTeXFormat{LaTeX2e}
 \def \filename {beamercolorthemesolarized-light.sty}
-\def \filedate {2015/02/22}
-\def \fileversion {1.0}
+\def \filedate {2015/05/13}
+\def \fileversion {1.1}
 \ProvidesPackage{beamercolorthemesolarized-light}[\filedate\space\fileversion
   \space Beamer "solarized-light" colour theme]
 \typeout{Package: `beamercolorthemesolarized-light' \fileversion\space
   <\filedate>}
+
+% ********************************************************************
+% Theme options
+% ********************************************************************
+
+\DeclareOptionBeamer{emph}[true]{\def\beamer@themesolarized-light@emph{#1}}
+\ExecuteOptionsBeamer{emph=false}
+\ProcessOptionsBeamer
+
+%% Required for processing the theme options.
+\RequirePackage{ifthen}
 
 % ********************************************************************
 % Presentation mode
@@ -34,7 +52,12 @@
 \definecolor{background}{RGB}{253,246,227}  % #fdf6e3
 \definecolor{background2}{RGB}{238,232,213} % #eee8d5
 \definecolor{background3}{RGB}{238,232,213} % #eee8d5
-\definecolor{normtext}{RGB}{101,123,131}    % #657b83
+\ifthenelse{\equal{\beamer@themesolarized-light@emph}{true}}{%
+  %% Multiply the default colour (below) by 0.75.
+  \definecolor{normtext}{RGB}{76,92,98}     % #4c5c62
+}{%
+  \definecolor{normtext}{RGB}{101,123,131}  % #657b83
+}
 \definecolor{green}{RGB}{133,153,0}         % #859900
 \definecolor{orange}{RGB}{203,75,22}        % #cb4b16
 \definecolor{yellow}{RGB}{181,137,0}        % #b58900

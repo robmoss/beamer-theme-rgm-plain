@@ -6,6 +6,10 @@
 % It uses the freely-available "Open Sans" font and, by default, the
 % Solarized colour palette (in light mode).
 %
+% 1.1 2015/05/13
+%   Added the "emph" and "heavy" options for increasing legibility, in
+%   response to feedback from an audience member with impaired vision.
+%
 % 1.0 2015/02/22
 %   Initial version of the theme.
 %
@@ -13,6 +17,9 @@
 %   bars - Show section names and dots for each slide in the header;
 %          this requires sections and subsections to be defined.
 %   dark - Use the "solarized-dark" theme instead of "solarized-light".
+%   emph - Increase the contrast of the text.
+%   heavy - Use the regular-weight typeface ("Open Sans") in lieu of
+%           the lighter, default typeface ("Open Sans Light").
 %
 % Custom Commands:
 %   \boldword
@@ -32,8 +39,8 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \def \filename {beamerthemergm-plain.sty}
-\def \filedate {2015/02/22}
-\def \fileversion {1.0}
+\def \filedate {2015/05/13}
+\def \fileversion {1.1}
 \ProvidesPackage{beamerthemergm-plain}[\filedate\space\fileversion\space
     Beamer "rgm-plain" theme]
 \typeout{Package: `beamerthemergm-plain' \fileversion\space <\filedate>}
@@ -47,6 +54,10 @@
 \ExecuteOptionsBeamer{dark=false}
 \DeclareOptionBeamer{bars}[true]{\def\beamer@themergmplain@bars{#1}}
 \ExecuteOptionsBeamer{bars=false}
+\DeclareOptionBeamer{emph}[true]{\def\beamer@themergmplain@emph{#1}}
+\ExecuteOptionsBeamer{emph=false}
+\DeclareOptionBeamer{heavy}[true]{\def\beamer@themergmplain@heavy{#1}}
+\ExecuteOptionsBeamer{heavy=false}
 \ProcessOptionsBeamer
 
 
@@ -83,9 +94,17 @@
 
 %% Use the solarized colour theme (the default is the light version).
 \ifthenelse{\equal{\beamer@themergmplain@dark}{true}}{%
-  \usecolortheme{solarized-dark}
+  \ifthenelse{\equal{\beamer@themergmplain@emph}{true}}{%
+    \usecolortheme[emph]{solarized-dark}
+  }{%
+    \usecolortheme{solarized-dark}
+  }
 }{%
-  \usecolortheme{solarized-light}
+  \ifthenelse{\equal{\beamer@themergmplain@emph}{true}}{%
+    \usecolortheme[emph]{solarized-light}
+  }{%
+    \usecolortheme{solarized-light}
+  }
 }
 
 
@@ -107,10 +126,17 @@
 \RequirePackage{xltxtra,xunicode}
 
 %% Note: number options include Lining|OldStyle and Monospaced|Proportional.
-%% Set the font for all text and plain mathematics.
-\setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
-%% Set the font for \mathrm{} text.
-\setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+\ifthenelse{\equal{\beamer@themergmplain@heavy}{true}}{%
+  %% Set the font for all text and plain mathematics.
+  \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
+  %% Set the font for \mathrm{} text.
+  \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
+}{%
+  %% Set the font for all text and plain mathematics.
+  \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+  %% Set the font for \mathrm{} text.
+  \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+}
 
 
 % ********************************************************************
