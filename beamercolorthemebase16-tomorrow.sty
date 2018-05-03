@@ -1,0 +1,96 @@
+% ********************************************************************
+% beamercolorthemetomorrow-day.sty
+% Rob Moss, 2016
+%
+% This package provides the "base16-tomorrow" colour theme for Beamer:
+%
+% https://github.com/chriskempson/base16-tomorrow-scheme
+%
+% 1.0 2017/01/31
+%   Initial version of the colour theme.
+%
+% ********************************************************************
+
+\NeedsTeXFormat{LaTeX2e}
+\def \filename {beamercolorthemebase16-tomorrow.sty}
+\def \filedate {2017/01/31}
+\def \fileversion {1.0}
+\ProvidesPackage{beamercolorthemebase16-tomorrow}[\filedate\space
+  \fileversion\space Beamer "base16-tomorrow" colour theme]
+\typeout{Package: `beamercolorthemebase16-tomorrow \fileversion\space
+  <\filedate>}
+
+% ********************************************************************
+% Presentation mode
+% ********************************************************************
+
+\mode<presentation>
+
+% ********************************************************************
+% Colour palette
+% ********************************************************************
+
+\definecolor{background}{HTML}{ffffff}  % base00
+\definecolor{background2}{HTML}{d6d6d6} % base02
+\definecolor{background3}{HTML}{d6d6d6} % base02
+\definecolor{normtext}{HTML}{4d4d4c}    % base05
+\definecolor{comment}{HTML}{8e908c}     % base03
+
+\definecolor{red}{HTML}{c82829}         % base08
+\definecolor{orange}{HTML}{f5871f}      % base09
+\definecolor{yellow}{HTML}{eab700}      % base0A
+\definecolor{green}{HTML}{718c00}       % base0B
+\definecolor{cyan}{HTML}{3e999f}        % base0C
+\definecolor{blue}{HTML}{4271ae}        % base0D
+\definecolor{violet}{HTML}{8959a8}      % base0E
+\definecolor{brown}{HTML}{a3685a}       % base0F
+
+% ********************************************************************
+% Beamer colours
+% ********************************************************************
+
+\setbeamercolor{normal text}{fg=normtext,bg=background}
+\setbeamercolor{section in toc}{fg=blue,bg=background}
+\setbeamercolor{subsection in toc}{fg=green,bg=background}
+\setbeamercolor{alerted text}{fg=red,bg=background3}
+
+%% Use the same colour for block titles *and* block text.
+\setbeamercolor{block title}{fg=yellow,bg=background3}
+\setbeamercolor{block body}{fg=yellow,bg=background3}
+\setbeamercolor{block title alerted}{fg=orange,bg=background3}
+\setbeamercolor{block body alerted}{fg=orange,bg=background3}
+\setbeamercolor{block title example}{fg=green,bg=background3}
+\setbeamercolor{block body example}{fg=green,bg=background3}
+
+\setbeamercolor{example text}{fg=green}
+\setbeamercolor{structure}{fg=red} %% Figure caption
+
+\setbeamercolor{author}{fg=normtext}
+\setbeamercolor{institute}{fg=green}
+\setbeamercolor{date}{fg=green}
+
+\setbeamercolor*{palette primary}{fg=yellow,bg=background}
+\setbeamercolor*{palette secondary}{fg=blue,bg=background}
+\setbeamercolor*{palette tertiary}{fg=orange,bg=background}
+\setbeamercolor*{palette quaternary}{fg=green,bg=background}
+
+\setbeamercolor*{sidebar}{fg=normtext,bg=background3}
+\setbeamercolor*{item}{fg=blue}
+
+\setbeamercolor*{palette sidebar primary}{fg=yellow,bg=background3}
+\setbeamercolor*{palette sidebar secondary}{fg=blue,bg=background3}
+\setbeamercolor*{palette sidebar tertiary}{fg=orange,bg=background3}
+\setbeamercolor*{palette sidebar quaternary}{fg=green,bg=background3}
+
+\setbeamercolor{titlelike}{parent=pallette primary,fg=blue}
+\setbeamercolor{frametitle}{fg=blue,bg=background}
+\setbeamercolor{frametitle right}{fg=green,bg=background}
+\setbeamercolor{framesubtitle}{fg=violet}
+
+\usebeamercolor*{normal text}
+
+% ********************************************************************
+% Other modes
+% ********************************************************************
+
+\mode<all>
