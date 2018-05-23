@@ -119,24 +119,33 @@
 %% Note: this must be loaded before mathspec, because it loads amsmath.
 \RequirePackage{mathtools}
 
-%% Use ordinary fonts (OTF, etc) for typesetting mathematics with XeLaTeX.
-\RequirePackage{mathspec}
+%% Check whether we can use ordinary system fonts with XeLaTeX.
+\RequirePackage{ifxetex}
 
-%% Improved functionality and various fixes when using the XeTeX backend.
-\RequirePackage{xltxtra,xunicode}
+\ifxetex
+  \typeout{Package: `beamerthemergm-plain' has detected XeLaTeX}
 
-%% Note: number options include Lining|OldStyle and Monospaced|Proportional.
-\ifthenelse{\equal{\beamer@themergmplain@heavy}{true}}{%
-  %% Set the font for all text and plain mathematics.
-  \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
-  %% Set the font for \mathrm{} text.
-  \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
-}{%
-  %% Set the font for all text and plain mathematics.
-  \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
-  %% Set the font for \mathrm{} text.
-  \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
-}
+  %% Use ordinary fonts (OTF, etc) for typesetting mathematics with XeLaTeX.
+  \RequirePackage{mathspec}
+
+  %% Improved functionality and various fixes when using the XeTeX backend.
+  \RequirePackage{xltxtra,xunicode}
+
+  %% Note: number options include Lining|OldStyle and Monospaced|Proportional.
+  \ifthenelse{\equal{\beamer@themergmplain@heavy}{true}}{%
+    %% Set the font for all text and plain mathematics.
+    \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
+    %% Set the font for \mathrm{} text.
+    \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans}
+  }{%
+    %% Set the font for all text and plain mathematics.
+    \setsansfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+    %% Set the font for \mathrm{} text.
+    \setmainfont[Mapping=tex-text,Numbers={OldStyle}]{Open Sans Light}
+  }
+\else
+  \typeout{Package: `beamerthemergm-plain' has not detected XeLaTeX}
+\fi
 
 
 % ********************************************************************
