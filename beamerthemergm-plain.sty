@@ -212,6 +212,23 @@
   }
 }
 
+%% Create a frame that contains an image, scaled to cover the entire frame.
+%% This differs from \imageframe{} in that the image scaling is defined in
+%% terms of the page *width* rather than page *height*.
+%%
+%% Usage:
+%%     \imageframew{image-file}
+%%
+\newcommand{\imageframew}[1]{%
+  {
+    \usebackgroundtemplate{%
+      \includegraphics[width=\paperwidth]{#1}}
+    \begin{frame}[plain]{}
+      \centering
+    \end{frame}
+  }
+}
+
 %% Highlight portions of equations with coloured boxes and coloured text
 %% either above or below each box; these highlights can be nested.
 %%
