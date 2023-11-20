@@ -6,6 +6,10 @@
 % It uses the freely-available "Open Sans" font and, by default, the
 % Solarized colour palette (in light mode).
 %
+% 1.3 2023/11/20
+%   Load "unicode-math" instead of "mathspec", so that we can use an OpenType
+%   maths font for all aspects of LaTeX mathematics.
+%
 % 1.2 2018/05/23
 %   Summarised package options and commands in README.
 %
@@ -49,8 +53,8 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \def \filename {beamerthemergm-plain.sty}
-\def \filedate {2015/05/13}
-\def \fileversion {1.1}
+\def \filedate {2023/11/20}
+\def \fileversion {1.3}
 \ProvidesPackage{beamerthemergm-plain}[\filedate\space\fileversion\space
     Beamer "rgm-plain" theme]
 \typeout{Package: `beamerthemergm-plain' \fileversion\space <\filedate>}
@@ -136,7 +140,14 @@
   \typeout{Package: `beamerthemergm-plain' has detected XeLaTeX}
 
   %% Use ordinary fonts (OTF, etc) for typesetting mathematics with XeLaTeX.
-  \RequirePackage{mathspec}
+  %% NOTE: The unicode-math package allows us to use an OpenType maths font for
+  %% all aspects of LaTeX mathematics, while the mathspec package allows us to
+  %% substitute only the alphabetic symbols --- all other maths symbols are left
+  %% untouched.
+  %% See "Unicode mathematics in LATEX: Advantages and challenges" for details
+  %% (Will Robertson, TUGboat 31(2), 2010).
+  %% \RequirePackage{mathspec}
+  \RequirePackage{unicode-math}
 
   %% Improved functionality and various fixes when using the XeTeX backend.
   \RequirePackage{xltxtra,xunicode}
