@@ -1,10 +1,13 @@
 % ********************************************************************
 % beamerthemergm-plain.sty
-% Rob Moss, 2015
+% Rob Moss, 2015-2024
 %
 % This package provides the "rgm-plain" presentation theme for Beamer.
 % It uses the freely-available "Open Sans" font and, by default, the
 % Solarized colour palette (in light mode).
+%
+% 1.5 2024/07/31
+%   Add support for Lining style numbers.
 %
 % 1.4 2024/02/22
 %   Add support for LuaTeX.
@@ -37,6 +40,7 @@
 %   emph - Increase the contrast of the text.
 %   heavy - Use the regular-weight typeface ("Open Sans") in lieu of
 %           the lighter, default typeface ("Open Sans Light").
+%   lining - Use Lining style for numbers rather than OldStyle.
 %
 % Custom Commands:
 %   \boldword
@@ -56,8 +60,8 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \def \filename {beamerthemergm-plain.sty}
-\def \filedate {2024/02/22}
-\def \fileversion {1.4}
+\def \filedate {2024/07/31}
+\def \fileversion {1.5}
 \ProvidesPackage{beamerthemergm-plain}[\filedate\space\fileversion\space
     Beamer "rgm-plain" theme]
 \typeout{Package: `beamerthemergm-plain' \fileversion\space <\filedate>}
@@ -75,6 +79,8 @@
 \ExecuteOptionsBeamer{emph=false}
 \DeclareOptionBeamer{heavy}[true]{\def\beamer@themergmplain@heavy{#1}}
 \ExecuteOptionsBeamer{heavy=false}
+\DeclareOptionBeamer{lining}[true]{\def\beamer@themergmplain@lining{#1}}
+\ExecuteOptionsBeamer{lining=false}
 \ProcessOptionsBeamer
 
 
@@ -163,15 +169,29 @@
 
   %% Note: number options include Lining|OldStyle and Monospaced|Proportional.
   \ifthenelse{\equal{\beamer@themergmplain@heavy}{true}}{%
-    %% Set the font for all text and plain mathematics.
-    \setsansfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans}
-    %% Set the font for \mathrm{} text.
-    \setmainfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans}
+    \ifthenelse{\equal{\beamer@themergmplain@lining}{true}}{%
+      %% Set the font for all text and plain mathematics.
+      \setsansfont[Ligatures=TeX,Numbers={Lining}]{Open Sans}
+      %% Set the font for \mathrm{} text.
+      \setmainfont[Ligatures=TeX,Numbers={Lining}]{Open Sans}
+    }{%
+      %% Set the font for all text and plain mathematics.
+      \setsansfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans}
+      %% Set the font for \mathrm{} text.
+      \setmainfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans}
+    }
   }{%
-    %% Set the font for all text and plain mathematics.
-    \setsansfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans Light}
-    %% Set the font for \mathrm{} text.
-    \setmainfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans Light}
+    \ifthenelse{\equal{\beamer@themergmplain@lining}{true}}{%
+      %% Set the font for all text and plain mathematics.
+      \setsansfont[Ligatures=TeX,Numbers={Lining}]{Open Sans Light}
+      %% Set the font for \mathrm{} text.
+      \setmainfont[Ligatures=TeX,Numbers={Lining}]{Open Sans Light}
+    }{%
+      %% Set the font for all text and plain mathematics.
+      \setsansfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans Light}
+      %% Set the font for \mathrm{} text.
+      \setmainfont[Ligatures=TeX,Numbers={OldStyle}]{Open Sans Light}
+    }
   }
 }{%
   \typeout{Package: `beamerthemergm-plain' has not detected XeTeX or LuaTeX}
