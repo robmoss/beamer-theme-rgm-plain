@@ -21,6 +21,7 @@ This work is made available under the BSD 2-Clause license (see `LICENSE`).
 * `emph`: Increase the contrast of the text.
 * `heavy`: Use the regular-weight typeface ("Open Sans") in lieu of the
   lighter, default typeface ("Open Sans Light").
+* `lining`: Use the Lining number style rather than the default (OldStyle).
 
 ### Commands
 
